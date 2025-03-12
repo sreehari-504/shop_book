@@ -1,0 +1,86 @@
+{%extends 'base.html'%} {%load static%} {%block content%}
+<div style="padding: 20px; min-height: 85vh">
+  <div
+    style="
+      width: 80%;
+      margin: 0 auto;
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    "
+  >
+    <div>
+      <img
+        style="width: 300px; height: auto; object-fit: contain"
+        src="{{product.image.url}}"
+        alt="{{product.name}}"
+      />
+    </div>
+    <div style="width: 450px; flex-grow: 1">
+      <div style="margin-bottom: 10px"><h2>{{product.name}}</h2></div>
+      <div style="margin-bottom: 10px">
+        {% if product.is_sale%}
+        <p>
+          $<strike> {{product.price}}</strike> $
+          <span style="font-size: 1.3rem">{{product.sale_price}}</span>
+        </p>
+        {%else%}
+        <p>$ <span style="font-size: 1.3rem">{{product.price}}</span></p>
+        {%endif%}
+      </div>
+      <div style="margin-bottom: 10px">{{product.description}}</div>
+      <!-- <div style="margin-bottom: 10px">{{product.id}}</div> -->
+      <div style="margin-bottom: 10px">
+        <div class="row">
+          <div class="col-md-2">Quantity:</div>
+          <div class="col-md-2">
+            <select class="form-select" id="qty-cart">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom: 10px">
+        <a href="{% url 'home' %}" class="btn btn-secondary">Home</a>
+        <button
+          type="button"
+          value="{{product.id}}"
+          class="btn btn-secondary"
+          id="add-cart"
+        >
+          Add to Cart
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Check if button is clicked
+  $(document).on("click", "#add-cart", function (e) {
+    e.preventDefault();
+    $.ajax({
+      type: "POST",
+      url: "{% url 'cart_add' %}",
+      data: {
+        product_id: $("#add-cart").val(),
+        product_qty: $("#qty-cart option:selected").text(),
+        csrfmiddlewaretoken: "{{ csrf_token }}",
+        action: "post",
+      },
+
+      success: function (json) {
+        // console.log(json);
+        document.getElementById("cart-quantity").textContent = json.qty;
+        location.reload();
+      },
+
+      error: function (xhr, errmsg, err) {},
+    });
+  });
+</script>
+{%endblock%}

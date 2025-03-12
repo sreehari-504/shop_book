@@ -1,0 +1,39 @@
+{%extends 'base.html'%} {%load static%} {%block content%}
+<!-- Header-->
+<header class="bg-dark py-5">
+  <div class="container px-4 px-lg-5 my-5">
+    <div class="text-center text-white">
+      <h1 class="display-4 fw-bolder">Order</h1>
+      <p class="lead fw-normal text-white-50 mb-0">Order Processed</p>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 offset-md-3">
+      <div class="card" style="margin: 20px 0">
+        <div class="card-header">Order Summary</div>
+        <div class="card-body">
+          {%if order%}
+          <div style="text-align: center">
+            <h3>
+              Your order with order id:
+              <span style="color: blue">{{order.id}}</span> has been placed
+              successfully. Use this order id to track delivery. It will be
+              delivered within a week. Thank you for purchasing from us.
+            </h3>
+            <a
+              href="{% url 'home' %}"
+              class="btn btn-secondary"
+              style="margin: 10px"
+              >Go to Home</a
+            >
+          </div>
+          {%endif%}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{%endblock%}

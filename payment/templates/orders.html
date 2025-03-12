@@ -1,0 +1,37 @@
+{%extends 'base.html'%} {%load static%} {%block content%}
+<!-- Header-->
+<header class="bg-dark py-5">
+  <div class="container px-4 px-lg-5 my-5">
+    <div class="text-center text-white">
+      <h1 class="display-4 fw-bolder">Orders</h1>
+      <p class="lead fw-normal text-white-50 mb-0">View your orders</p>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 offset-md-3">
+      <div class="card" style="margin: 20px 0">
+        <div class="card-header">Order Summary</div>
+        <div class="card-body">
+          {% for order in orders %}
+          <div style="margin: 10px; padding: 10px">
+            Order No: {{order.id}} <br />
+            Ordered On: {{order.date_ordered}} <br />
+            Ordered For: {{order.shipping_details.full_name}} <br />
+            Email Id: {{order.shipping_details.email}} <br />
+            Address: {{order.shipping_details.address1}},
+            {{order.shipping_details.address2}} <br />
+            City: {{order.shipping_details.city}} <br />
+            State: {{order.shipping_details.state}} <br />
+            Country: {{order.shipping_details.country}} <br />
+            Zipcode: {{order.shipping_details.zipcode}} <br />
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{%endblock%}

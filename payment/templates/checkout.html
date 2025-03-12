@@ -1,0 +1,87 @@
+{%extends 'base.html'%} {%load static%} {%block content%}
+<!-- Header-->
+<header class="bg-dark py-5">
+  <div class="container px-4 px-lg-5 my-5">
+    <div class="text-center text-white">
+      <h1 class="display-4 fw-bolder">Checkout</h1>
+      <p class="lead fw-normal text-white-50 mb-0">Review your order</p>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 offset-md-3">
+      <div class="card" style="margin: 20px 0">
+        <div class="card-header">Order Summary</div>
+        <div class="card-body">
+          {%if cart_products%}
+          <div>
+            {%for product in cart_products%}
+            <h5 style="margin: 10px 0">{{product.name}}:</h5>
+            {%if product.is_sale%}
+            <span>$ {{product.sale_price}}</span>
+            {%else%}
+            <span>$ {{product.price}}</span>
+            {%endif%} Quantity: {% for key,value in quantities.items%}
+            <span></span>
+            {% if key == product.id|slugify %} {{value}} {%endif%} {%endfor%}
+            {%endfor%}
+          </div>
+          {%endif%}
+          <h3 style="margin: 10px 0">
+            Total: $ <span style="color: blue">{{totals}}</span>
+          </h3>
+          <a
+            href="{% url 'cart_summary' %}"
+            class="btn btn-sm btn-outline-secondary"
+            >Update Order</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" style="margin-bottom: 10px">
+    <div class="col-md-6 offset-md-3">
+      <div class="card">
+        <div class="card-header">Shipping Info</div>
+        <div class="card-body">
+          {% if shipping_info %} Name: {{shipping_info.full_name}}<br />
+          Address: {{shipping_info.address1}}, {{shipping_info.address2}}<br />
+          City: {{shipping_info.city}} <br />
+          State: {{shipping_info.state}} <br />
+          Country: {{shipping_info.country}} <br />
+          Zip Code: {{shipping_info.zipcode}} <br />
+          {%else%}
+          <p>
+            No Shipping information available. Please add shipping information
+            by clicking the link below to continue billing.
+          </p>
+          {% endif %}
+          <a
+            href="{% url 'shipping_info' %}"
+            class="btn btn-sm btn-outline-secondary"
+            style="margin-top: 10px"
+            >Update Shipping Info
+          </a>
+        </div>
+      </div>
+      {%if shipping_info%}
+
+      <form method="POST" action="{% url 'process_order' %}">
+        {% csrf_token %}
+        <input
+          type="hidden"
+          name="shipping-detail"
+          value="{{shipping_info.id}}"
+        />
+        <button type="submit" class="btn btn-primary" style="margin: 5px 0">
+          Continue to Billing
+        </button>
+      </form>
+      {%endif%}
+    </div>
+  </div>
+</div>
+{%endblock%}

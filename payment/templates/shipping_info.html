@@ -1,0 +1,84 @@
+{%extends 'base.html'%} {%load static%} {%block content%}
+<!-- Header-->
+<header class="bg-dark py-5">
+  <div class="container px-4 px-lg-5 my-5">
+    <div class="text-center text-white">
+      <h1 class="display-4 fw-bolder">Shipping Information</h1>
+      <p class="lead fw-normal text-white-50 mb-0">
+        Add/ Update Shipping Information
+      </p>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 offset-md-3">
+      <div class="card" style="margin: 20px 0">
+        <div class="card-header">Add/ Update Shipping Information</div>
+        <div class="card-body">
+          <form
+            method="POST"
+            action="{% url 'shipping_info' %}"
+            class="shipping-form"
+            novalidate
+          >
+            {%csrf_token%}
+            <input
+              type="text"
+              name="full-name"
+              placeholder="Enter your fullname"
+              required
+            />
+            <input
+              type="email"
+              name="email"
+              placeholder="Enter your email"
+              required
+            />
+            <input
+              type="text"
+              name="address1"
+              placeholder="Enter your address1"
+              required
+            />
+            <input
+              type="text"
+              name="address2"
+              placeholder="Enter your address2"
+              required
+            />
+            <input
+              type="text"
+              name="city"
+              placeholder="Enter your city"
+              required
+            />
+            <input
+              type="text"
+              name="state"
+              placeholder="Enter your state"
+              required
+            />
+            <input
+              type="text"
+              name="country"
+              placeholder="Enter your country"
+              required
+            />
+            <input
+              type="text"
+              name="zipcode"
+              placeholder="Enter your zipcode"
+              required
+            />
+            <button type="submit" class="btn btn-primary" style="margin: 5px">
+              Save Shipping Info
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{%endblock%}

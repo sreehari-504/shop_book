@@ -1,0 +1,116 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container px-4 px-lg-5">
+    <a class="navbar-brand" href="{% url 'home' %}">ShopBook</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{% url 'home' %}"
+            >Home</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'search' %}">Search</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'about' %}">About</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            id="navbarDropdown"
+            href="#"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+            >View Books</a
+          >
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li>
+              <a class="dropdown-item" href="{% url 'home' %}">All Books</a>
+            </li>
+            <li><hr class="dropdown-divider" /></li>
+
+            <li>
+              <a
+                class="dropdown-item"
+                href="{% url 'category' 'Science-Books' %}"
+                >Science</a
+              >
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                href="{% url 'category' 'Practice-Books' %}"
+                >Practice</a
+              >
+            </li>
+            <li>
+              <a class="dropdown-item" href="{% url 'category' 'Story-Books' %}"
+                >Story</a
+              >
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                href="{% url 'category' 'Fiction Books' %}"
+                >Fiction</a
+              >
+            </li>
+            <li>
+              <a class="dropdown-item" href="{% url 'category' 'Other-Books' %}"
+                >Other</a
+              >
+            </li>
+          </ul>
+        </li>
+      </ul>
+
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+        {%if user.is_authenticated%}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+        </li>
+        <!-- <li class="nav-item">
+          <a class="nav-link" href="{% url 'update_user' %}">Update</a>
+        </li> -->
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'view_orders' %}">Orders</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">{{user.get_full_name}}</a>
+        </li>
+        {%else%}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'login' %}">Login</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'register_user' %}">Register</a>
+        </li>
+        {%endif%}
+      </ul>
+      <form class="d-flex">
+        <a href="{% url 'cart_summary' %}" class="btn btn-outline-dark">
+          <i class="bi-cart-fill me-1"></i>
+          Cart
+          <span
+            class="badge bg-dark text-white ms-1 rounded-pill"
+            id="cart-quantity"
+            >{{cart|length}}</span
+          >
+        </a>
+      </form>
+    </div>
+  </div>
+</nav>
